@@ -197,7 +197,7 @@ export const AdminClasses: React.FC<AdminClassesProps> = ({
                 const endDate = new Date(recurringConfig.endDate);
                 const classesToCreate: Class[] = [];
                 
-                let currentDate = new Date(startDate);
+                const currentDate = new Date(startDate);
                 let classCount = 0;
                 const maxClasses = 52; // Limit to 1 year of weekly classes
                 

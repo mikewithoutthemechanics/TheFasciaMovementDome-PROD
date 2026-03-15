@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Venue } from '../../types';
 import * as Icons from '../Icons';
-import EmptyState from '../ui/EmptyState';
+import { EmptyState } from '../ui/EmptyState';
 
 const focusRing = "focus:outline-none focus:ring-2 focus:ring-[#6E7568] focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-[#6E7568] focus-visible:ring-offset-2";
 

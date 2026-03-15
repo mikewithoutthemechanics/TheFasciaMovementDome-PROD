@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense, lazy, Component, ReactNode, useRef } from 'react';
-import { User, AppState, Class, Registration, Venue, Template, AppSettings, WaiverData, AdminRole, ChatMessage, Teacher, InjuryRecord, Disclaimer, GoogleCalendarTokens } from './types';
+import { User, AppState, Class, Registration, Venue, Template, AppSettings, WaiverData, ChatMessage, Teacher, InjuryRecord, Disclaimer } from './types';
 
 // Auto-logout after 5 minutes of inactivity
 const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutes

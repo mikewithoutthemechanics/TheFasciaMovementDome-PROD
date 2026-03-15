@@ -8,230 +8,118 @@
  * 1. Create a database at https://upstash.com
  * 2. Copy the UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN
  * 3. Add to Vercel environment variables
- */
-
-import { Redis } from '@upstash/redis';
-
-// Redis client instance (lazy initialized)
-let redis: Redis | null = null;
-
-/**
- * Initialize Redis client with Upstash credentials
- * Uses REST API for Vercel serverless compatibility
- */
-function getRedisClient(): Redis | null {
-  if (redis) return redis;
-  
-  const restUrl = process.env.UPSTASH_REDIS_REST_URL;
-  const restToken = process.env.UPSTASH_REDIS_REST_TOKEN;
-  
-  if (!restUrl || !restToken) {
-    console.warn('⚠️ Redis (Upstash) not configured - caching disabled');
-    console.warn('   Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel');
-    return null;
-  }
-  
-  try {
-    redis = new Redis({
-      url: restUrl,
-      token: restToken,
-    });
-    console.log('✅ Redis (Upstash) connected successfully');
-    return redis;
-  } catch (error) {
-    console.error('❌ Failed to initialize Redis:', error);
-    return null;
-  }
-}
-
-// ============================================
-// CACHE OPERATIONS
-// ============================================
-
-/**
- * Get value from cache
- */
-export async function getCache<T>(key: string): Promise<T | null> {
-  const client = getRedisClient();
-  if (!client) return null;
-  
-  try {
-    const value = await client.get<T>(key);
-    return value ?? null;
-  } catch (error) {
-    console.error('Redis get error:', error);
-    return null;
-  }
-}
-
-/**
- * Set value in cache with optional TTL (seconds)
- */
-export async function setCache<T>(key: string, value: T, ttlSeconds?: number): Promise<boolean> {
-  const client = getRedisClient();
-  if (!client) return false;
-  
-  try {
-    if (ttlSeconds) {
-      await client.set(key, value, { ex: ttlSeconds });
-    } else {
-      await client.set(key, value);
-    }
-    return true;
-  } catch (error) {
-    console.error('Redis set error:', error);
-    return false;
-  }
-}
-
-/**
- * Delete key from cache
- */
-export async function deleteCache(key: string): Promise<boolean> {
-  const client = getRedisClient();
-  if (!client) return false;
-  
-  try {
-    await client.del(key);
-    return true;
-  } catch (error) {
-    console.error('Redis delete error:', error);
-    return false;
-  }
-}
-
-/**
- * Check if key exists in cache
- */
-export async function existsCache(key: string): Promise<boolean> {
-  const client = getRedisClient();
-  if (!client) return false;
-  
-  try {
-    const result = await client.exists(key);
-    return result === 1;
-  } catch (error) {
-    console.error('Redis exists error:', error);
-    return false;
-  }
-}
-
-// ============================================
-// RATE LIMITING
-// ============================================
-
-/**
- * Simple rate limiter using Redis
- * Returns true if request is allowed, false if rate limited
  * 
- * @param key - Unique identifier (e.g., IP address, user ID)
- * @param limit - Maximum requests allowed in window
- * @param windowSeconds - Time window in seconds
+ * Note: This is a stub implementation. The @upstash/redis package
+ * needs to be installed for full functionality.
  */
-export async function checkRateLimit(
-  key: string, 
-  limit: number, 
-  windowSeconds: number = 60
-): Promise<{ allowed: boolean; remaining: number; resetAt: number }> {
-  const client = getRedisClient();
-  if (!client) {
-    // If Redis not configured, allow request (fail-open)
-    return { allowed: true, remaining: limit, resetAt: Date.now() + windowSeconds * 1000 };
-  }
-  
-  const rateKey = `ratelimit:${key}`;
-  const now = Date.now();
-  const resetAt = now + windowSeconds * 1000;
-  
-  try {
-    // Use sliding window rate limiting
-    const result = await client.multi()
-      .zadd(rateKey, { score: now, member: `${now}` })
-      .zremrangebyscore(rateKey, 0, now - windowSeconds * 1000)
-      .zcard(rateKey)
-      .exec();
-    
-    const count = result[2] as number;
-    
-    if (count > limit) {
-      // Rate limited - remove the request we just added
-      await client.zrem(rateKey, `${now}`);
-      return { allowed: false, remaining: 0, resetAt };
-    }
-    
-    // Clean up old entries periodically
-    if (count > limit * 2) {
-      await client.zremrangebyscore(rateKey, 0, now - windowSeconds * 1000);
-    }
-    
-    return { 
-      allowed: true, 
-      remaining: Math.max(0, limit - count), 
-      resetAt 
-    };
-  } catch (error) {
-    console.error('Rate limit error:', error);
-    // Fail open - allow request on error
-    return { allowed: true, remaining: limit, resetAt };
-  }
+
+// Stub implementation - returns gracefully when Redis is not configured
+// To enable: npm install @upstash/redis and uncomment the import
+
+interface RateLimitResult {
+  allowed: boolean;
+  remaining: number;
+  resetAt: number;
 }
 
-// ============================================
-// SESSION/STORAGE OPERATIONS
-// ============================================
-
-/**
- * Store session data with TTL
- */
-export async function setSession<T>(
-  sessionId: string, 
-  data: T, 
-  ttlSeconds: number = 86400 // 24 hours default
-): Promise<boolean> {
-  return setCache(`session:${sessionId}`, data, ttlSeconds);
+interface RedisStatus {
+  isConfigured: boolean;
+  hasUrl: boolean;
+  hasToken: boolean;
+  urlConfigured: string;
 }
 
 /**
- * Get session data
- */
-export async function getSession<T>(sessionId: string): Promise<T | null> {
-  return getCache<T>(sessionId);
-}
-
-/**
- * Delete session
- */
-export async function deleteSession(sessionId: string): Promise<boolean> {
-  return deleteCache(`session:${sessionId}`);
-}
-
-// ============================================
-// UTILITY
-// ============================================
-
-/**
- * Check if Redis is available
+ * Check if Redis is available (always returns false for stub)
  */
 export function isRedisConfigured(): boolean {
-  return !!(
-    process.env.UPSTASH_REDIS_REST_URL && 
-    process.env.UPSTASH_REDIS_REST_TOKEN
-  );
+  return false;
 }
 
 /**
  * Get Redis configuration status for debugging
  */
-export function getRedisStatus() {
-  const configured = isRedisConfigured();
+export function getRedisStatus(): RedisStatus {
   return {
-    isConfigured: configured,
-    hasUrl: !!process.env.UPSTASH_REDIS_REST_URL,
-    hasToken: !!process.env.UPSTASH_REDIS_REST_TOKEN,
-    urlConfigured: configured 
-      ? `${process.env.UPSTASH_REDIS_REST_URL?.substring(0, 30)}...` 
-      : 'NOT SET'
+    isConfigured: false,
+    hasUrl: false,
+    hasToken: false,
+    urlConfigured: 'NOT SET - npm install @upstash/redis to enable'
   };
+}
+
+/**
+ * Get value from cache (stub - always returns null)
+ */
+export async function getCache<T>(_key: string): Promise<T | null> {
+  console.warn('⚠️ Redis not configured - caching disabled');
+  return null;
+}
+
+/**
+ * Set value in cache with optional TTL (stub - always returns false)
+ */
+export async function setCache<T>(
+  _key: string, 
+  _value: T, 
+  _ttlSeconds?: number
+): Promise<boolean> {
+  console.warn('⚠️ Redis not configured - caching disabled');
+  return false;
+}
+
+/**
+ * Delete key from cache (stub - always returns false)
+ */
+export async function deleteCache(_key: string): Promise<boolean> {
+  return false;
+}
+
+/**
+ * Check if key exists in cache (stub - always returns false)
+ */
+export async function existsCache(_key: string): Promise<boolean> {
+  return false;
+}
+
+/**
+ * Simple rate limiter (stub - always allows)
+ */
+export async function checkRateLimit(
+  _key: string, 
+  limit: number, 
+  windowSeconds: number = 60
+): Promise<RateLimitResult> {
+  return { 
+    allowed: true, 
+    remaining: limit, 
+    resetAt: Date.now() + windowSeconds * 1000 
+  };
+}
+
+/**
+ * Store session data with TTL (stub - always returns false)
+ */
+export async function setSession<T>(
+  _sessionId: string, 
+  _data: T, 
+  _ttlSeconds?: number
+): Promise<boolean> {
+  return false;
+}
+
+/**
+ * Get session data (stub - always returns null)
+ */
+export async function getSession<T>(_sessionId: string): Promise<T | null> {
+  return null;
+}
+
+/**
+ * Delete session (stub - always returns false)
+ */
+export async function deleteSession(_sessionId: string): Promise<boolean> {
+  return false;
 }
 
 export const redisService = {
