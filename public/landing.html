@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pause Fascia Movement - Discover the benefits of fascia fitness and book your classes at The Fascia Movement Dome" />
+  <title>Pause Fascia Movement | Discover</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sage: #6B7B6E;
+      --sage-light: #8A9A8E;
+      --sage-muted: #A4B1A7;
+      --sage-dark: #4A5A4D;
+      --cream: #F5F0E8;
+      --brown: #5D4E3C;
+      --brown-light: #7A6A56;
+      --deep-earth: #3D3227;
+    }
+    
+    body { 
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(165deg, var(--sage-dark) 0%, var(--sage) 50%, var(--sage-light) 100%);
+      background-attachment: fixed;
+    }
+    
+    /* Rich layered backgrounds */
+    .bg-layers {
+      background: 
+        radial-gradient(ellipse at 20% 80%, rgba(74, 90, 77, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(138, 154, 142, 0.2) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(107, 123, 110, 0.3) 0%, transparent 60%),
+        linear-gradient(165deg, var(--sage-dark) 0%, var(--sage) 100%);
+    }
+    
+    /* Depth shadows */
+    .shadow-depth { box-shadow: 0 4px 24px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1); }
+    .shadow-depth-lg { box-shadow: 0 8px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.12); }
+    .shadow-depth-xl { box-shadow: 0 16px 64px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15); }
+    .shadow-inner { box-shadow: inset 0 2px 8px rgba(0,0,0,0.1); }
+    
+    /* Rich glassmorphism */
+    .glass { background: linear-gradient(135deg, rgba(107, 123, 110, 0.95) 0%, rgba(74, 90, 77, 0.9) 100%); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+    .glass-card { 
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px); 
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .glass-card-hover {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    
+    /* Text depth */
+    .text-gradient {
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 50%, rgba(245, 240, 232, 0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Subtle texture overlay */
+    .texture-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+    
+    /* Smooth animations */
+    .fade-in { opacity: 0; transform: translateY(24px); animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .fade-in-delay-1 { animation-delay: 0.12s; }
+    .fade-in-delay-2 { animation-delay: 0.24s; }
+    .fade-in-delay-3 { animation-delay: 0.36s; }
+    .fade-in-delay-4 { animation-delay: 0.48s; }
+    .fade-in-delay-5 { animation-delay: 0.60s; }
+    .fade-in-delay-6 { animation-delay: 0.72s; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Hover effects */
+    .hover-lift { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hover-lift:hover { transform: translateY(-8px); }
+    
+    /* Interactive elements */
+    .interactive { cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+    .interactive:hover { transform: translateY(-2px); }
+    .interactive:active { transform: translateY(0); }
+    
+    /* Focus states */
+    a:focus, button:focus { outline: 2px solid white; outline-offset: 3px; }
+    
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+    
+    /* Rich divider */
+    .divider-rich {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+    
+    /* Button shine effect */
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-shine:hover::after {
+      left: 100%;
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { animation: none; opacity: 1; transform: none; }
+      .hover-lift { transition: none; }
+      .hover-lift:hover { transform: none; }
+    }
+  </style>
+</head>
+<body class="bg-layers text-white texture-overlay relative">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass shadow-depth border-b border-white/10">
+    <div class="max-w-5xl mx-auto px-8 py-5 flex justify-between items-center">
+      <h1 class="text-2xl font-semibold tracking-tight interactive text-white hover:opacity-80">PAUSE</h1>
+      <a href="#join" class="bg-white text-[var(--sage-dark)] px-7 py-2.5 rounded-full text-sm font-medium uppercase tracking-widest hover:bg-[var(--cream)] transition-all duration-300 interactive btn-shine shadow-depth">
+        Join Now
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-36 pb-28 px-4 relative overflow-hidden">
+    <!-- Rich decorative orbs with depth -->
+    <div class="absolute top-[-25%] right-[-20%] w-[55vw] h-[55vw] bg-gradient-to-br from-white/10 to-transparent rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-[-20%] left-[-15%] w-[60vw] h-[60vw] bg-gradient-to-tl from-[var(--sage-dark)]/50 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute top-[25%] left-[5%] w-[25vw] h-[25vw] bg-gradient-to-br from-white/8 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute top-[60%] right-[10%] w-[15vw] h-[15vw] bg-gradient-to-bl from-[var(--sage-light)]/20 to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+    
+    <!-- Subtle pattern overlay -->
+    <div class="absolute inset-0 opacity-[0.015] pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+    
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <p id="hero-tagline" class="text-xs font-medium uppercase tracking-[4px] text-white/70 mb-6 fade-in">Step into the Dome</p>
+      <h2 id="hero-header" class="text-5xl md:text-7xl font-semibold leading-[1.05] tracking-tight mb-8 fade-in fade-in-delay-1 text-gradient">
+        where fascia becomes <span class="italic text-white">fluid</span>
+      </h2>
+      <p id="hero-subtext" class="text-lg text-white/70 max-w-xl mx-auto mb-12 fade-in fade-in-delay-2 leading-relaxed">Experience the transformative power of fascia movement at The Dome.</p>
+      <a href="#classes" class="inline-block bg-white text-[var(--sage-dark)] px-10 py-4.5 rounded-full text-sm font-medium uppercase tracking-widest hover:bg-[var(--cream)] transition-all duration-300 hover:shadow-2xl interactive fade-in fade-in-delay-3 btn-shine shadow-depth-lg">
+        View Upcoming Classes
+      </a>
+    </div>
+  </section>
+
+  <!-- Upcoming Classes Section -->
+  <section id="classes" class="py-28 px-4 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--sage)] via-[var(--sage-dark)]/30 to-[var(--sage)]"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-white/10 rounded-full mb-6 fade-in">
+          <p class="text-xs font-medium uppercase tracking-widest text-white/70">Book Your Session</p>
+        </div>
+        <h3 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3 fade-in">Upcoming Classes</h3>
+        <p class="text-white/70 fade-in fade-in-delay-1">Reserve your spot at The Fascia Movement Dome</p>
+      </div>
+      
+      <div id="classes-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Classes will be loaded here -->
+        <div class="col-span-full text-center py-12 text-white/50 fade-in">
+          Loading classes...
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <p class="text-sm text-white/50 fade-in">More classes coming soon</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fascia Education Section (Cards) -->
+  <section id="education" class="py-28 px-4 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--sage)] via-[var(--deep-earth)]/40 to-[var(--sage-dark)]"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-white/10 rounded-full mb-6 fade-in">
+          <p class="text-xs font-medium uppercase tracking-widest text-white/70">The Science</p>
+        </div>
+        <h3 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3 fade-in">Why Fascia Movement?</h3>
+        <p class="text-white/70 fade-in fade-in-delay-1">Discover the science behind the movement</p>
+      </div>
+
+      <div id="education-grid" class="grid md:grid-cols-2 gap-6">
+        <!-- Education cards will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="py-28 px-4 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--sage-dark)] via-[var(--sage)]/80 to-[var(--sage-light)]"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center p-8 rounded-3xl glass-card hover:glass-card-hover transition-all duration-400 interactive fade-in shadow-depth">
+          <div class="w-16 h-16 bg-gradient-to-br from-white/25 to-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
+            <i data-lucide="heart" class="w-8 h-8"></i>
+          </div>
+          <h4 class="font-medium mb-3 text-lg">Reduce Pain</h4>
+          <p class="text-sm text-white/70 leading-relaxed">Release tension and alleviate chronic pain through targeted fascia work</p>
+        </div>
+        <div class="text-center p-8 rounded-3xl glass-card hover:glass-card-hover transition-all duration-400 interactive fade-in fade-in-delay-1 shadow-depth">
+          <div class="w-16 h-16 bg-gradient-to-br from-white/25 to-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
+            <i data-lucide="zap" class="w-8 h-8"></i>
+          </div>
+          <h4 class="font-medium mb-3 text-lg">Increase Mobility</h4>
+          <p class="text-sm text-white/70 leading-relaxed">Improve flexibility and range of motion in every session</p>
+        </div>
+        <div class="text-center p-8 rounded-3xl glass-card hover:glass-card-hover transition-all duration-400 interactive fade-in fade-in-delay-2 shadow-depth">
+          <div class="w-16 h-16 bg-gradient-to-br from-white/25 to-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
+            <i data-lucide="sparkles" class="w-8 h-8"></i>
+          </div>
+          <h4 class="font-medium mb-3 text-lg">Feel Younger</h4>
+          <p class="text-sm text-white/70 leading-relaxed">Rejuvenate your body and feel more energized after each class</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What to Expect -->
+  <section class="py-28 px-4 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--sage-light)] via-[var(--sage)]/90 to-[var(--sage-dark)]"></div>
+    <div class="max-w-3xl mx-auto relative z-10">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-white/10 rounded-full mb-6 fade-in">
+          <p class="text-xs font-medium uppercase tracking-widest text-white/70">Your First Visit</p>
+        </div>
+        <h3 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3 fade-in">What to Expect</h3>
+      </div>
+      <div id="expectations-list" class="space-y-4">
+        <!-- Expectations loaded from settings -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="join" class="py-32 px-4 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--sage-dark)] via-[var(--deep-earth)] to-[var(--sage-dark)]"></div>
+    <!-- Decorative orbs -->
+    <div class="absolute top-[-30%] left-[-20%] w-[50vw] h-[50vw] bg-white/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="absolute bottom-[-30%] right-[-20%] w-[50vw] h-[50vw] bg-[var(--sage-light)]/20 rounded-full blur-[150px] pointer-events-none"></div>
+    
+    <div class="max-w-2xl mx-auto text-center relative z-10">
+      <h3 class="text-4xl md:text-5xl font-semibold tracking-tight mb-6 fade-in text-gradient">Ready to feel the difference?</h3>
+      <p class="text-white/70 mb-12 fade-in fade-in-delay-1 leading-relaxed text-lg">Join hundreds of others who have discovered the transformative power of fascia movement.</p>
+      <a href="#" onclick="window.location.href = window.location.origin + '/?auth=signup'" class="inline-block bg-white text-[var(--sage-dark)] px-14 py-5 rounded-full text-base font-medium uppercase tracking-widest hover:bg-[var(--cream)] transition-all duration-300 hover:shadow-2xl interactive fade-in fade-in-delay-2 btn-shine shadow-depth-lg">
+        Get Started
+      </a>
+      <p class="text-sm text-white/40 mt-8 fade-in fade-in-delay-3">No commitment required | First class from R150</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 bg-[var(--deep-earth)] text-white/40 text-center text-sm relative">
+    <div class="divider-rich mb-8"></div>
+    <p>&copy; 2026 Pause Fascia Movement. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Cache keys
+    const SETTINGS_CACHE_KEY = 'landing_settings_cache_v4';
+    const CLASSES_CACHE_KEY = 'landing_classes_cache_v4';
+    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
+
+    // Default data
+    const defaultSettings = {
+      landingPage: {
+        headerText: 'where fascia becomes FLUID',
+        subheaderText: 'Step into the Dome',
+        heroSubtext: 'Experience the transformative power of fascia movement at The Dome.',
+        expectations: [
+          'Arrive 10 minutes early for your first session',
+          'Wear comfortable, stretchy clothing',
+          'Bring a mat and water bottle',
+          'No previous experience necessary'
+        ],
+        fasciaEducation: [
+          { id: '1', title: 'What is Fascia?', content: 'Fascia is a network of connective tissue that surrounds every muscle, bone, and organ in your body. It\'s like a web that holds everything together. When fascia is healthy, it\'s flexible and fluid. When it\'s tight, it can cause pain and restrict movement.', icon: 'circle-help' },
+          { id: '2', title: 'Benefits of Fascia Movement', content: 'Regular fascia movement can reduce chronic pain, improve posture, increase flexibility, and enhance athletic performance. It helps release stored tension and promotes better circulation throughout the body.', icon: 'sparkles' },
+          { id: '3', title: 'What happens in a session?', content: 'A typical session involves gentle, sustained stretches and movements that target the fascia. You\'ll use specialized techniques to help the fascia release and become more pliable. Most people feel immediate relief and a sense of lightness.', icon: 'flower-2' },
+          { id: '4', title: 'Why Choose Pause FMD?', content: 'At Pause Fascia Movement Dome, we combine ancient wisdom with modern science. Our certified instructors guide you through personalized sessions in a calm, supportive environment. Many clients report lasting pain relief after just a few sessions.', icon: 'gem' }
+        ]
+      }
+    };
+
+    let settings = defaultSettings;
+    let classes = [];
+
+    // Check if cache is valid
+    function isCacheValid(cacheData) {
+      if (!cacheData || !cacheData.timestamp) return false;
+      return (Date.now() - cacheData.timestamp) < CACHE_DURATION;
+    }
+
+    // Get cached data
+    function getCached(key) {
+      try {
+        const cached = localStorage.getItem(key);
+        if (!cached) return null;
+        const data = JSON.parse(cached);
+        if (isCacheValid(data)) {
+          return data.value;
+        }
+      } catch (e) {
+        console.log('Cache read error:', e);
+      }
+      return null;
+    }
+
+    // Save to cache
+    function setCache(key, value) {
+      try {
+        const data = { value, timestamp: Date.now() };
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        console.log('Cache write error:', e);
+      }
+    }
+
+    // Load settings with caching
+    async function loadSettings() {
+      const cachedSettings = getCached(SETTINGS_CACHE_KEY);
+      const cached(SETTINGS_CACHE_KEY);
+      if (cachedSettings) {
+        settings.landingPage = { ...settings.landingPage, ...cachedSettings.landingPage };
+        return;
+      }
+
+      try {
+        const settingsRes = await fetch('/api/settings');
+        if (settingsRes.ok) {
+          const data = await settingsRes.json();
+          if (data.settings?.landingPage) {
+            settings.landingPage = { ...settings.landingPage, ...data.settings.landingPage };
+            setCache(SETTINGS_CACHE_KEY, settings);
+          }
+        }
+      } catch (e) {
+        console.log('Using default settings');
+      }
+    }
+
+    // Load classes with caching
+    async function loadClasses() {
+      const cachedClasses = getCached(CLASSES_CACHE_KEY);
+      if (cachedClasses && cachedClasses.length > 0) {
+        classes = cachedClasses;
+        return;
+      }
+
+      try {
+        const classesRes = await fetch('/api/public/classes');
+        if (classesRes.ok) {
+          classes = await classesRes.json();
+          setCache(CLASSES_CACHE_KEY, classes);
+        }
+      } catch (e) {
+        console.log('No classes available');
+      }
+    }
+
+    // Load all data
+    async function loadData() {
+      await Promise.all([loadSettings(), loadClasses()]);
+      renderPage();
+    }
+
+    function renderPage() {
+      // Hero section
+      document.getElementById('hero-tagline').textContent = settings.landingPage.subheaderText || 'Step into the Dome';
+      document.getElementById('hero-header').innerHTML = settings.landingPage.headerText ? 
+        settings.landingPage.headerText.replace(/FLUID/gi, '<span class="italic text-white">fluid</span>') : 
+        'where fascia becomes <span class="italic text-white">fluid</span>';
+      document.getElementById('hero-subtext').textContent = settings.landingPage.heroSubtext || 'Experience the transformative power of fascia movement at The Dome.';
+
+      // Classes grid
+      const classesGrid = document.getElementById('classes-grid');
+      if (classes.length > 0) {
+        classesGrid.innerHTML = classes.slice(0, 6).map((cls, idx) => `
+          <div class="glass-card rounded-2xl p-6 hover-lift fade-in fade-in-delay-${idx + 1} shadow-depth">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="font-medium text-lg text-white">${cls.title}</h4>
+              <span class="px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full">${cls.duration || '60 min'}</span>
+            </div>
+            <p class="text-sm text-white/60 mb-4">${formatDate(cls.date)} at ${cls.startTime}</p>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <span class="text-xs ${cls.spotsLeft > 0 ? 'text-white/60' : 'text-red-300'}">
+                ${cls.spotsLeft > 0 ? `${cls.spotsLeft} spots left` : 'Full'}
+              </span>
+              <a href="#" onclick="window.location.href = window.location.origin + '/?auth=signup'" class="text-sm font-medium text-white hover:text-white/70 transition-colors interactive flex items-center gap-1.5">
+                Sign up
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Expectations
+      const expectationsList = document.getElementById('expectations-list');
+      expectationsList.innerHTML = settings.landingPage.expectations.map((exp, idx) => `
+        <div class="flex items-center gap-5 p-5 glass-card rounded-2xl hover-lift fade-in fade-in-delay-${idx + 1} shadow-depth">
+          <div class="w-10 h-10 bg-gradient-to-br from-white/25 to-white/10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
+            <i data-lucide="check" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="text-white">${exp}</span>
+        </div>
+      `).join('');
+
+      // Education cards (replacing accordion)
+      const educationGrid = document.getElementById('education-grid');
+      educationGrid.innerHTML = settings.landingPage.fasciaEducation.map((item, idx) => `
+        <div class="glass-card rounded-2xl p-8 hover-lift fade-in fade-in-delay-${idx + 1} shadow-depth">
+          <div class="w-14 h-14 bg-gradient-to-br from-white/25 to-white/10 rounded-2xl flex items-center justify-center mb-5 shadow-inner">
+            <i data-lucide="${item.icon}" class="w-7 h-7 text-white"></i>
+          </div>
+          <h4 class="font-medium text-xl mb-4 text-white">${item.title}</h4>
+          <p class="text-white/70 leading-relaxed">${item.content}</p>
+        </div>
+      `).join('');
+
+      // Re-initialize Lucide icons for dynamically added elements
+      lucide.createIcons();
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-ZA', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    // Initialize
+    loadData();
+  </script>
+</body>
+</html>
